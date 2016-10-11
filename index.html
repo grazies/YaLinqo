@@ -1,3 +1,312 @@
 <!DOCTYPE html>
-<meta http-equiv="Refresh" content="0; url=docs/classes/YaLinqo.Enumerable.html" />
-<p><a href="docs/classes/YaLinqo.Enumerable.html">YaLinqo Documentation: Enumerable class</a>
+<html lang="en-us">
+  <head>
+    <meta charset="UTF-8">
+    <title>Yalinqo by grazies</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="stylesheets/normalize.css" media="screen">
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen">
+    <link rel="stylesheet" type="text/css" href="stylesheets/github-light.css" media="screen">
+  </head>
+  <body>
+    <section class="page-header">
+      <h1 class="project-name">Yalinqo</h1>
+      <h2 class="project-tagline">Yet Another LINQ to Objects for PHP [Simplified BSD]</h2>
+      <a href="https://github.com/grazies/YaLinqo" class="btn">View on GitHub</a>
+      <a href="https://github.com/grazies/YaLinqo/zipball/master" class="btn">Download .zip</a>
+      <a href="https://github.com/grazies/YaLinqo/tarball/master" class="btn">Download .tar.gz</a>
+    </section>
+
+    <section class="main-content">
+      <h1>
+<a id="yalinqo-yet-another-linq-to-objects-for-php" class="anchor" href="#yalinqo-yet-another-linq-to-objects-for-php" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a><em>YaLinqo: Yet Another LINQ to Objects for PHP</em>
+</h1>
+
+<p><a href="https://travis-ci.org/Athari/YaLinqo"><img src="https://img.shields.io/travis/Athari/YaLinqo.svg" alt="Travis CI Status"></a>
+<a href="https://coveralls.io/r/Athari/YaLinqo"><img src="https://img.shields.io/coveralls/Athari/YaLinqo/master.svg" alt="Coveralls Coverage"></a>
+<a href="https://scrutinizer-ci.com/g/Athari/YaLinqo"><img src="https://img.shields.io/scrutinizer/g/Athari/YaLinqo.svg" alt="Scrutinizer Code Quality"></a>
+<a href="https://insight.sensiolabs.com/projects/d1273f86-85e3-4076-a037-a40062906329"><img src="https://img.shields.io/sensiolabs/i/d1273f86-85e3-4076-a037-a40062906329.svg" alt="SensioLabs Insight Check"></a>
+<a href="https://www.versioneye.com/php/athari:yalinqo"><img src="https://www.versioneye.com/php/athari:yalinqo/badge.svg" alt="VersionEye Dependencies"></a><br>
+<a href="https://packagist.org/packages/athari/yalinqo"><img src="https://img.shields.io/packagist/dt/athari/yalinqo.svg" alt="Packagist Downloads"></a>
+<a href="https://www.versioneye.com/php/athari:yalinqo/references"><img src="https://www.versioneye.com/php/athari:yalinqo/reference_badge.svg" alt="VersionEye References"></a>
+<a href="https://packagist.org/packages/athari/yalinqo"><img src="https://img.shields.io/packagist/v/athari/yalinqo.svg" alt="Packagist Version"></a>
+<a href="license.md"><img src="https://img.shields.io/github/license/Athari/YaLinqo.svg" alt="GitHub License"></a></p>
+
+<ul>
+<li><a href="http://athari.github.io/YaLinqo"><strong>Online documentation</strong></a></li>
+<li><a href="https://github.com/Athari/YaLinqo"><strong>GitHub repository</strong></a></li>
+</ul>
+
+<h1>
+<a id="features" class="anchor" href="#features" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Features</h1>
+
+<ul>
+<li>The most complete port of .NET 4 LINQ to PHP, with <a href="#implemented-methods">many additional methods</a>.</li>
+<li>Lazy evaluation, error messages and other behavior of original LINQ.</li>
+<li>
+<a href="http://athari.github.io/YaLinqo">Detailed PHPDoc and online reference</a> based on PHPDoc for all methods. Articles are adapted from original LINQ documentation from MSDN.</li>
+<li>100% unit test coverage.</li>
+<li>Best performance among full-featured LINQ ports (YaLinqo, Ginq, Pinq), at least 2x faster than the closest competitor, see <a href="https://github.com/Athari/YaLinqoPerf">performance tests</a>.</li>
+<li>Callback functions can be specified as closures (like <code>function ($v) { return $v; }</code>), PHP "function pointers" (either strings like <code>'strnatcmp'</code> or arrays like <code>array($object, 'methodName')</code>), string "lambdas" using various syntaxes (<code>'"$k = $v"'</code>, <code>'$v ==&gt; $v+1'</code>, <code>'($v, $k) ==&gt; $v + $k'</code>, <code>'($v, $k) ==&gt; { return $v + $k; }'</code>).</li>
+<li>Keys are as important as values. Most callback functions receive both values and the keys; transformations can be applied to both values and the keys; keys are never lost during transformations, if possible.</li>
+<li>SPL interfaces <code>Iterator</code>, <code>IteratorAggregate</code> etc. are used throughout the code and can be used interchangeably with Enumerable.</li>
+<li>Redundant collection classes are avoided, native PHP arrays are used everywhere.</li>
+<li>Composer support (<a href="https://packagist.org/packages/athari/yalinqo">package</a> on Packagist).</li>
+<li>No external dependencies.</li>
+</ul>
+
+<h1>
+<a id="implemented-methods" class="anchor" href="#implemented-methods" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Implemented methods</h1>
+
+<p>Some methods had to be renamed, because their names are reserved keywords. Original methods names are given in parenthesis.</p>
+
+<ul>
+<li>
+<strong>Generation</strong>: cycle, emptyEnum (empty), from, generate, toInfinity, toNegativeInfinity, matches, returnEnum (return), range, rangeDown, rangeTo, repeat, split;</li>
+<li>
+<strong>Projection and filtering</strong>: cast, ofType, select, selectMany, where;</li>
+<li>
+<strong>Ordering</strong>: orderBy, orderByDescending, orderByDir, thenBy, thenByDescending, thenByDir;</li>
+<li>
+<strong>Joining and grouping</strong>: groupJoin, join, groupBy;</li>
+<li>
+<strong>Aggregation</strong>: aggregate, aggregateOrDefault, average, count, max, maxBy, min, minBy, sum;</li>
+<li>
+<strong>Set</strong>: all, any, contains, distinct, except, intersect, union;</li>
+<li>
+<strong>Pagination</strong>: elementAt, elementAtOrDefault, first, firstOrDefault, firstOrFallback, last, lastOrDefault, lastOrFallback, single, singleOrDefault, singleOrFallback, indexOf, lastIndexOf, findIndex, findLastIndex, skip, skipWhile, take, takeWhile;</li>
+<li>
+<strong>Conversion</strong>: toArray, toArrayDeep, toList, toListDeep, toDictionary, toJSON, toLookup, toKeys, toValues, toObject, toString;</li>
+<li>
+<strong>Actions</strong>: call (do), each (forEach), write, writeLine.</li>
+</ul>
+
+<p>In total, more than 70 methods.</p>
+
+<h1>
+<a id="example" class="anchor" href="#example" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Example</h1>
+
+<p><em>Process sample data:</em></p>
+
+<div class="highlight highlight-text-html-php"><pre><span class="pl-s1"><span class="pl-c">// Data</span></span>
+<span class="pl-s1"><span class="pl-smi">$products</span> <span class="pl-k">=</span> <span class="pl-c1">array</span>(</span>
+<span class="pl-s1">    <span class="pl-c1">array</span>(<span class="pl-s"><span class="pl-pds">'</span>name<span class="pl-pds">'</span></span> <span class="pl-k">=&gt;</span> <span class="pl-s"><span class="pl-pds">'</span>Keyboard<span class="pl-pds">'</span></span>,    <span class="pl-s"><span class="pl-pds">'</span>catId<span class="pl-pds">'</span></span> <span class="pl-k">=&gt;</span> <span class="pl-s"><span class="pl-pds">'</span>hw<span class="pl-pds">'</span></span>, <span class="pl-s"><span class="pl-pds">'</span>quantity<span class="pl-pds">'</span></span> <span class="pl-k">=&gt;</span>  <span class="pl-c1">10</span>, <span class="pl-s"><span class="pl-pds">'</span>id<span class="pl-pds">'</span></span> <span class="pl-k">=&gt;</span> <span class="pl-c1">1</span>),</span>
+<span class="pl-s1">    <span class="pl-c1">array</span>(<span class="pl-s"><span class="pl-pds">'</span>name<span class="pl-pds">'</span></span> <span class="pl-k">=&gt;</span> <span class="pl-s"><span class="pl-pds">'</span>Mouse<span class="pl-pds">'</span></span>,       <span class="pl-s"><span class="pl-pds">'</span>catId<span class="pl-pds">'</span></span> <span class="pl-k">=&gt;</span> <span class="pl-s"><span class="pl-pds">'</span>hw<span class="pl-pds">'</span></span>, <span class="pl-s"><span class="pl-pds">'</span>quantity<span class="pl-pds">'</span></span> <span class="pl-k">=&gt;</span>  <span class="pl-c1">20</span>, <span class="pl-s"><span class="pl-pds">'</span>id<span class="pl-pds">'</span></span> <span class="pl-k">=&gt;</span> <span class="pl-c1">2</span>),</span>
+<span class="pl-s1">    <span class="pl-c1">array</span>(<span class="pl-s"><span class="pl-pds">'</span>name<span class="pl-pds">'</span></span> <span class="pl-k">=&gt;</span> <span class="pl-s"><span class="pl-pds">'</span>Monitor<span class="pl-pds">'</span></span>,     <span class="pl-s"><span class="pl-pds">'</span>catId<span class="pl-pds">'</span></span> <span class="pl-k">=&gt;</span> <span class="pl-s"><span class="pl-pds">'</span>hw<span class="pl-pds">'</span></span>, <span class="pl-s"><span class="pl-pds">'</span>quantity<span class="pl-pds">'</span></span> <span class="pl-k">=&gt;</span>   <span class="pl-c1">0</span>, <span class="pl-s"><span class="pl-pds">'</span>id<span class="pl-pds">'</span></span> <span class="pl-k">=&gt;</span> <span class="pl-c1">3</span>),</span>
+<span class="pl-s1">    <span class="pl-c1">array</span>(<span class="pl-s"><span class="pl-pds">'</span>name<span class="pl-pds">'</span></span> <span class="pl-k">=&gt;</span> <span class="pl-s"><span class="pl-pds">'</span>Joystick<span class="pl-pds">'</span></span>,    <span class="pl-s"><span class="pl-pds">'</span>catId<span class="pl-pds">'</span></span> <span class="pl-k">=&gt;</span> <span class="pl-s"><span class="pl-pds">'</span>hw<span class="pl-pds">'</span></span>, <span class="pl-s"><span class="pl-pds">'</span>quantity<span class="pl-pds">'</span></span> <span class="pl-k">=&gt;</span>  <span class="pl-c1">15</span>, <span class="pl-s"><span class="pl-pds">'</span>id<span class="pl-pds">'</span></span> <span class="pl-k">=&gt;</span> <span class="pl-c1">4</span>),</span>
+<span class="pl-s1">    <span class="pl-c1">array</span>(<span class="pl-s"><span class="pl-pds">'</span>name<span class="pl-pds">'</span></span> <span class="pl-k">=&gt;</span> <span class="pl-s"><span class="pl-pds">'</span>CPU<span class="pl-pds">'</span></span>,         <span class="pl-s"><span class="pl-pds">'</span>catId<span class="pl-pds">'</span></span> <span class="pl-k">=&gt;</span> <span class="pl-s"><span class="pl-pds">'</span>hw<span class="pl-pds">'</span></span>, <span class="pl-s"><span class="pl-pds">'</span>quantity<span class="pl-pds">'</span></span> <span class="pl-k">=&gt;</span>  <span class="pl-c1">15</span>, <span class="pl-s"><span class="pl-pds">'</span>id<span class="pl-pds">'</span></span> <span class="pl-k">=&gt;</span> <span class="pl-c1">5</span>),</span>
+<span class="pl-s1">    <span class="pl-c1">array</span>(<span class="pl-s"><span class="pl-pds">'</span>name<span class="pl-pds">'</span></span> <span class="pl-k">=&gt;</span> <span class="pl-s"><span class="pl-pds">'</span>Motherboard<span class="pl-pds">'</span></span>, <span class="pl-s"><span class="pl-pds">'</span>catId<span class="pl-pds">'</span></span> <span class="pl-k">=&gt;</span> <span class="pl-s"><span class="pl-pds">'</span>hw<span class="pl-pds">'</span></span>, <span class="pl-s"><span class="pl-pds">'</span>quantity<span class="pl-pds">'</span></span> <span class="pl-k">=&gt;</span>  <span class="pl-c1">11</span>, <span class="pl-s"><span class="pl-pds">'</span>id<span class="pl-pds">'</span></span> <span class="pl-k">=&gt;</span> <span class="pl-c1">6</span>),</span>
+<span class="pl-s1">    <span class="pl-c1">array</span>(<span class="pl-s"><span class="pl-pds">'</span>name<span class="pl-pds">'</span></span> <span class="pl-k">=&gt;</span> <span class="pl-s"><span class="pl-pds">'</span>Windows<span class="pl-pds">'</span></span>,     <span class="pl-s"><span class="pl-pds">'</span>catId<span class="pl-pds">'</span></span> <span class="pl-k">=&gt;</span> <span class="pl-s"><span class="pl-pds">'</span>os<span class="pl-pds">'</span></span>, <span class="pl-s"><span class="pl-pds">'</span>quantity<span class="pl-pds">'</span></span> <span class="pl-k">=&gt;</span> <span class="pl-c1">666</span>, <span class="pl-s"><span class="pl-pds">'</span>id<span class="pl-pds">'</span></span> <span class="pl-k">=&gt;</span> <span class="pl-c1">7</span>),</span>
+<span class="pl-s1">    <span class="pl-c1">array</span>(<span class="pl-s"><span class="pl-pds">'</span>name<span class="pl-pds">'</span></span> <span class="pl-k">=&gt;</span> <span class="pl-s"><span class="pl-pds">'</span>Linux<span class="pl-pds">'</span></span>,       <span class="pl-s"><span class="pl-pds">'</span>catId<span class="pl-pds">'</span></span> <span class="pl-k">=&gt;</span> <span class="pl-s"><span class="pl-pds">'</span>os<span class="pl-pds">'</span></span>, <span class="pl-s"><span class="pl-pds">'</span>quantity<span class="pl-pds">'</span></span> <span class="pl-k">=&gt;</span> <span class="pl-c1">666</span>, <span class="pl-s"><span class="pl-pds">'</span>id<span class="pl-pds">'</span></span> <span class="pl-k">=&gt;</span> <span class="pl-c1">8</span>),</span>
+<span class="pl-s1">    <span class="pl-c1">array</span>(<span class="pl-s"><span class="pl-pds">'</span>name<span class="pl-pds">'</span></span> <span class="pl-k">=&gt;</span> <span class="pl-s"><span class="pl-pds">'</span>Mac<span class="pl-pds">'</span></span>,         <span class="pl-s"><span class="pl-pds">'</span>catId<span class="pl-pds">'</span></span> <span class="pl-k">=&gt;</span> <span class="pl-s"><span class="pl-pds">'</span>os<span class="pl-pds">'</span></span>, <span class="pl-s"><span class="pl-pds">'</span>quantity<span class="pl-pds">'</span></span> <span class="pl-k">=&gt;</span> <span class="pl-c1">666</span>, <span class="pl-s"><span class="pl-pds">'</span>id<span class="pl-pds">'</span></span> <span class="pl-k">=&gt;</span> <span class="pl-c1">9</span>),</span>
+<span class="pl-s1">);</span>
+<span class="pl-s1"><span class="pl-smi">$categories</span> <span class="pl-k">=</span> <span class="pl-c1">array</span>(</span>
+<span class="pl-s1">    <span class="pl-c1">array</span>(<span class="pl-s"><span class="pl-pds">'</span>name<span class="pl-pds">'</span></span> <span class="pl-k">=&gt;</span> <span class="pl-s"><span class="pl-pds">'</span>Hardware<span class="pl-pds">'</span></span>,          <span class="pl-s"><span class="pl-pds">'</span>id<span class="pl-pds">'</span></span> <span class="pl-k">=&gt;</span> <span class="pl-s"><span class="pl-pds">'</span>hw<span class="pl-pds">'</span></span>),</span>
+<span class="pl-s1">    <span class="pl-c1">array</span>(<span class="pl-s"><span class="pl-pds">'</span>name<span class="pl-pds">'</span></span> <span class="pl-k">=&gt;</span> <span class="pl-s"><span class="pl-pds">'</span>Operating systems<span class="pl-pds">'</span></span>, <span class="pl-s"><span class="pl-pds">'</span>id<span class="pl-pds">'</span></span> <span class="pl-k">=&gt;</span> <span class="pl-s"><span class="pl-pds">'</span>os<span class="pl-pds">'</span></span>),</span>
+<span class="pl-s1">);</span>
+<span class="pl-s1"></span>
+<span class="pl-s1"><span class="pl-c">// Put products with non-zero quantity into matching categories;</span></span>
+<span class="pl-s1"><span class="pl-c">// sort categories by name;</span></span>
+<span class="pl-s1"><span class="pl-c">// sort products within categories by quantity descending, then by name.</span></span>
+<span class="pl-s1"><span class="pl-smi">$result</span> <span class="pl-k">=</span> from(<span class="pl-smi">$categories</span>)</span>
+<span class="pl-s1">    <span class="pl-k">-&gt;</span>orderBy(<span class="pl-s"><span class="pl-pds">'</span>$cat ==&gt; $cat["name"]<span class="pl-pds">'</span></span>)</span>
+<span class="pl-s1">    <span class="pl-k">-&gt;</span>groupJoin(</span>
+<span class="pl-s1">        from(<span class="pl-smi">$products</span>)</span>
+<span class="pl-s1">            <span class="pl-k">-&gt;</span>where(<span class="pl-s"><span class="pl-pds">'</span>$prod ==&gt; $prod["quantity"] &gt; 0<span class="pl-pds">'</span></span>)</span>
+<span class="pl-s1">            <span class="pl-k">-&gt;</span>orderByDescending(<span class="pl-s"><span class="pl-pds">'</span>$prod ==&gt; $prod["quantity"]<span class="pl-pds">'</span></span>)</span>
+<span class="pl-s1">            <span class="pl-k">-&gt;</span>thenBy(<span class="pl-s"><span class="pl-pds">'</span>$prod ==&gt; $prod["name"]<span class="pl-pds">'</span></span>),</span>
+<span class="pl-s1">        <span class="pl-s"><span class="pl-pds">'</span>$cat ==&gt; $cat["id"]<span class="pl-pds">'</span></span>, <span class="pl-s"><span class="pl-pds">'</span>$prod ==&gt; $prod["catId"]<span class="pl-pds">'</span></span>,</span>
+<span class="pl-s1">        <span class="pl-s"><span class="pl-pds">'</span>($cat, $prods) ==&gt; array(</span></span>
+<span class="pl-s1"><span class="pl-s">            "name" =&gt; $cat["name"],</span></span>
+<span class="pl-s1"><span class="pl-s">            "products" =&gt; $prods</span></span>
+<span class="pl-s1"><span class="pl-s">        )<span class="pl-pds">'</span></span></span>
+<span class="pl-s1">    );</span>
+<span class="pl-s1"></span>
+<span class="pl-s1"><span class="pl-c">// Alternative shorter syntax using default variable names</span></span>
+<span class="pl-s1"><span class="pl-smi">$result2</span> <span class="pl-k">=</span> from(<span class="pl-smi">$categories</span>)</span>
+<span class="pl-s1">    <span class="pl-k">-&gt;</span>orderBy(<span class="pl-s"><span class="pl-pds">'</span>$v["name"]<span class="pl-pds">'</span></span>)</span>
+<span class="pl-s1">    <span class="pl-k">-&gt;</span>groupJoin(</span>
+<span class="pl-s1">        from(<span class="pl-smi">$products</span>)</span>
+<span class="pl-s1">            <span class="pl-k">-&gt;</span>where(<span class="pl-s"><span class="pl-pds">'</span>$v["quantity"] &gt; 0<span class="pl-pds">'</span></span>)</span>
+<span class="pl-s1">            <span class="pl-k">-&gt;</span>orderByDescending(<span class="pl-s"><span class="pl-pds">'</span>$v["quantity"]<span class="pl-pds">'</span></span>)</span>
+<span class="pl-s1">            <span class="pl-k">-&gt;</span>thenBy(<span class="pl-s"><span class="pl-pds">'</span>$v["name"]<span class="pl-pds">'</span></span>),</span>
+<span class="pl-s1">        <span class="pl-s"><span class="pl-pds">'</span>$v["id"]<span class="pl-pds">'</span></span>, <span class="pl-s"><span class="pl-pds">'</span>$v["catId"]<span class="pl-pds">'</span></span>,</span>
+<span class="pl-s1">        <span class="pl-s"><span class="pl-pds">'</span>array(</span></span>
+<span class="pl-s1"><span class="pl-s">            "name" =&gt; $v["name"],</span></span>
+<span class="pl-s1"><span class="pl-s">            "products" =&gt; $e</span></span>
+<span class="pl-s1"><span class="pl-s">        )<span class="pl-pds">'</span></span></span>
+<span class="pl-s1">    );</span>
+<span class="pl-s1"></span>
+<span class="pl-s1"><span class="pl-c">// Closure syntax, maximum support in IDEs, but verbose and hard to read</span></span>
+<span class="pl-s1"><span class="pl-smi">$result3</span> <span class="pl-k">=</span> from(<span class="pl-smi">$categories</span>)</span>
+<span class="pl-s1">    <span class="pl-k">-&gt;</span>orderBy(<span class="pl-k">function</span> (<span class="pl-smi">$cat</span>) { <span class="pl-k">return</span> <span class="pl-smi">$cat</span>[<span class="pl-s"><span class="pl-pds">'</span>name<span class="pl-pds">'</span></span>]; })</span>
+<span class="pl-s1">    <span class="pl-k">-&gt;</span>groupJoin(</span>
+<span class="pl-s1">        from(<span class="pl-smi">$products</span>)</span>
+<span class="pl-s1">            <span class="pl-k">-&gt;</span>where(<span class="pl-k">function</span> (<span class="pl-smi">$prod</span>) { <span class="pl-k">return</span> <span class="pl-smi">$prod</span>[<span class="pl-s"><span class="pl-pds">"</span>quantity<span class="pl-pds">"</span></span>] <span class="pl-k">&gt;</span> <span class="pl-c1">0</span>; })</span>
+<span class="pl-s1">            <span class="pl-k">-&gt;</span>orderByDescending(<span class="pl-k">function</span> (<span class="pl-smi">$prod</span>) { <span class="pl-k">return</span> <span class="pl-smi">$prod</span>[<span class="pl-s"><span class="pl-pds">"</span>quantity<span class="pl-pds">"</span></span>]; })</span>
+<span class="pl-s1">            <span class="pl-k">-&gt;</span>thenBy(<span class="pl-k">function</span> (<span class="pl-smi">$prod</span>) { <span class="pl-k">return</span> <span class="pl-smi">$prod</span>[<span class="pl-s"><span class="pl-pds">"</span>name<span class="pl-pds">"</span></span>]; }),</span>
+<span class="pl-s1">        <span class="pl-k">function</span> (<span class="pl-smi">$cat</span>) { <span class="pl-k">return</span> <span class="pl-smi">$cat</span>[<span class="pl-s"><span class="pl-pds">"</span>id<span class="pl-pds">"</span></span>]; },</span>
+<span class="pl-s1">        <span class="pl-k">function</span> (<span class="pl-smi">$prod</span>) { <span class="pl-k">return</span> <span class="pl-smi">$prod</span>[<span class="pl-s"><span class="pl-pds">"</span>catId<span class="pl-pds">"</span></span>]; },</span>
+<span class="pl-s1">        <span class="pl-k">function</span> (<span class="pl-smi">$cat</span>, <span class="pl-smi">$prods</span>) {</span>
+<span class="pl-s1">            <span class="pl-k">return</span> <span class="pl-c1">array</span>(</span>
+<span class="pl-s1">                <span class="pl-s"><span class="pl-pds">"</span>name<span class="pl-pds">"</span></span> <span class="pl-k">=&gt;</span> <span class="pl-smi">$cat</span>[<span class="pl-s"><span class="pl-pds">"</span>name<span class="pl-pds">"</span></span>],</span>
+<span class="pl-s1">                <span class="pl-s"><span class="pl-pds">"</span>products<span class="pl-pds">"</span></span> <span class="pl-k">=&gt;</span> <span class="pl-smi">$prods</span></span>
+<span class="pl-s1">            );</span>
+<span class="pl-s1">        }</span>
+<span class="pl-s1">    );</span>
+<span class="pl-s1"></span>
+<span class="pl-s1"><span class="pl-c1">print_r</span>(<span class="pl-smi">$result</span><span class="pl-k">-&gt;</span>toArrayDeep());</span></pre></div>
+
+<p><em>Output (compacted):</em></p>
+
+<pre><code>Array (
+    [hw] =&gt; Array (
+        [name] =&gt; Hardware
+        [products] =&gt; Array (
+            [0] =&gt; Array ( [name] =&gt; Mouse       [catId] =&gt; hw [quantity] =&gt;  20 [id] =&gt; 2 )
+            [1] =&gt; Array ( [name] =&gt; CPU         [catId] =&gt; hw [quantity] =&gt;  15 [id] =&gt; 5 )
+            [2] =&gt; Array ( [name] =&gt; Joystick    [catId] =&gt; hw [quantity] =&gt;  15 [id] =&gt; 4 )
+            [3] =&gt; Array ( [name] =&gt; Motherboard [catId] =&gt; hw [quantity] =&gt;  11 [id] =&gt; 6 )
+            [4] =&gt; Array ( [name] =&gt; Keyboard    [catId] =&gt; hw [quantity] =&gt;  10 [id] =&gt; 1 )
+        )
+    )
+    [os] =&gt; Array (
+        [name] =&gt; Operating systems
+        [products] =&gt; Array (
+            [0] =&gt; Array ( [name] =&gt; Linux       [catId] =&gt; os [quantity] =&gt; 666 [id] =&gt; 8 )
+            [1] =&gt; Array ( [name] =&gt; Mac         [catId] =&gt; os [quantity] =&gt; 666 [id] =&gt; 9 )
+            [2] =&gt; Array ( [name] =&gt; Windows     [catId] =&gt; os [quantity] =&gt; 666 [id] =&gt; 7 )
+        )
+    )
+)
+</code></pre>
+
+<h1>
+<a id="requirements" class="anchor" href="#requirements" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Requirements</h1>
+
+<ul>
+<li>Version 1: PHP 5.3 or higher.</li>
+<li>Version 2: PHP 5.5 or higher.</li>
+</ul>
+
+<h1>
+<a id="usage" class="anchor" href="#usage" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Usage</h1>
+
+<p>Add to <code>composer.json</code>:</p>
+
+<div class="highlight highlight-source-json"><pre>{
+    <span class="pl-s"><span class="pl-pds">"</span>require<span class="pl-pds">"</span></span>: {
+        <span class="pl-s"><span class="pl-pds">"</span>athari/yalinqo<span class="pl-pds">"</span></span>: <span class="pl-s"><span class="pl-pds">"</span>~2.0<span class="pl-pds">"</span></span>
+    }
+}</pre></div>
+
+<p>Add to your PHP script:</p>
+
+<div class="highlight highlight-text-html-php"><pre><span class="pl-s1"><span class="pl-k">require_once</span> <span class="pl-s"><span class="pl-pds">'</span>vendor/autoloader.php<span class="pl-pds">'</span></span>;</span>
+<span class="pl-s1"><span class="pl-k">use</span> <span class="pl-c1">\YaLinqo\Enumerable</span>;</span>
+<span class="pl-s1"></span>
+<span class="pl-s1"><span class="pl-c">// 'from' can be called as a static method or via a global function shortcut</span></span>
+<span class="pl-s1"><span class="pl-c1">Enumerable</span><span class="pl-k">::</span>from(<span class="pl-c1">array</span>(<span class="pl-c1">1</span>, <span class="pl-c1">2</span>, <span class="pl-c1">3</span>));</span>
+<span class="pl-s1">from(<span class="pl-c1">array</span>(<span class="pl-c1">1</span>, <span class="pl-c1">2</span>, <span class="pl-c1">3</span>));</span></pre></div>
+
+<h1>
+<a id="license" class="anchor" href="#license" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>License</h1>
+
+<h4>
+<a id="simplified-bsd-license" class="anchor" href="#simplified-bsd-license" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Simplified BSD License</h4>
+
+<p>Copyright © 2012–2016, Alexander Prokhorov
+All rights reserved.</p>
+
+<p>Redistribution and use in source and binary forms, with or without
+modification, are permitted provided that the following conditions are met:</p>
+
+<ul>
+<li><p>Redistributions of source code must retain the above copyright
+notice, this list of conditions and the following disclaimer.</p></li>
+<li><p>Redistributions in binary form must reproduce the above copyright
+notice, this list of conditions and the following disclaimer in the
+documentation and/or other materials provided with the distribution.</p></li>
+</ul>
+
+<p>THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
+ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
+WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+DISCLAIMED. IN NO EVENT SHALL ALEXANDER PROKHOROV BE LIABLE FOR ANY
+DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
+(INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
+LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND
+ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+(INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
+SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.</p>
+
+<h1>
+<a id="links" class="anchor" href="#links" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Links</h1>
+
+<h4>
+<a id="yalinqo" class="anchor" href="#yalinqo" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>YaLinqo</h4>
+
+<ul>
+<li>
+<p><strong>CodeProject</strong> articles <em>(English):</em></p>
+
+<ul>
+<li>
+<a href="http://www.codeproject.com/Articles/997238/LINQ-for-PHP-comparison-YaLinqo-Ginq-Pinq">LINQ for PHP comparison: YaLinqo, Ginq, Pinq</a> — performance comparison of full-featured LINQ ports, with some additional information.</li>
+</ul>
+</li>
+<li>
+<p><strong>Habrahabr</strong> articles <em>(Russian):</em></p>
+
+<ul>
+<li>
+<a href="http://habrahabr.ru/post/147612/">Comparison of old LINQ libraries</a> — comparison of <em>LINQ for PHP</em>, <em>Phinq</em>, <em>PHPLinq</em> and <em>Plinq</em>, also <em>Underscore.php</em>.</li>
+<li>
+<a href="http://habrahabr.ru/post/147848/">YaLinqo 1.0 with updated comparison</a> — explanation of architecture and design decisions.</li>
+<li>
+<a href="http://habrahabr.ru/post/229763/">YaLinqo 2.0</a> — switch to PHP 5.5 with generators support and related changes.</li>
+<li>
+<a href="http://habrahabr.ru/post/259155/">LINQ for PHP: speed matters</a> — performance comparison of full-featured LINQ ports (YaLinqo, Ginq, Pinq).</li>
+</ul>
+</li>
+<li>
+<p><strong>Other</strong>:</p>
+
+<ul>
+<li>Tute Wall: <a href="http://tutewall.com/how-to-use-linq-in-php-part-01/">How to use Linq in PHP</a> by <em>Mr. X</em> — a series of posts covering basic usage of YaLinqo. </li>
+</ul>
+</li>
+<li>
+<p>Related projects:</p>
+
+<ul>
+<li>
+<a href="https://github.com/Athari/YaLinqoPerf"><strong>YaLinqoPerf</strong></a> — collection of performance tests comparing raw PHP, array functions, YaLinqo, YaLinqo with string lambdas, Ginq, Ginq with property accessors, Pinq.</li>
+</ul>
+</li>
+</ul>
+
+<h4>
+<a id="linq-ported-to-other-languages" class="anchor" href="#linq-ported-to-other-languages" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>LINQ ported to other languages:</h4>
+
+<ul>
+<li>
+<a href="http://linqjs.codeplex.com/"><strong>linq.js</strong></a> — LINQ for JavaScript. The one and only complete port of .NET 4 LINQ to JavaScript.</li>
+<li>
+<a href="http://documentcloud.github.com/underscore/"><strong>Underscore.js</strong></a> — library for functional programming in JavaScript. Similar to LINQ, but different method names and no lazy evaluation.</li>
+<li>
+<a href="http://brianhaveri.github.com/Underscore.php/"><strong>Underscore.php</strong></a> — port of Underscore.js to PHP. Identical functionality.</li>
+</ul>
+
+      <footer class="site-footer">
+        <span class="site-footer-owner"><a href="https://github.com/grazies/YaLinqo">Yalinqo</a> is maintained by <a href="https://github.com/grazies">grazies</a>.</span>
+
+        <span class="site-footer-credits">This page was generated by <a href="https://pages.github.com">GitHub Pages</a> using the <a href="https://github.com/jasonlong/cayman-theme">Cayman theme</a> by <a href="https://twitter.com/jasonlong">Jason Long</a>.</span>
+      </footer>
+
+    </section>
+
+  
+  </body>
+</html>
